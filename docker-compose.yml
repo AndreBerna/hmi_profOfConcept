@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  nanomq:
+    image: emqx/nanomq:0.20.2
+    container_name: nanomq
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+      - "8083:8083"
+    volumes:
+      - ./config/nanomq.conf:/etc/nanomq/nanomq.conf:ro
+
+  simulator:
+    build:
+      context: ./simulator
+      dockerfile: Dockerfile
+    container_name: simulator
+    restart: unless-stopped
+    environment:
+      - MQTT_HOST=nanomq
+      - MQTT_PORT=1883
+    depends_on:
+      - nanomq
+
+  hmi:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: hmi
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - VITE_MQTT_HOST=nanomq
+      - VITE_MQTT_PORT=8083
+    depends_on:
+      - nanomq
+
+networks:
+  default:
+    driver: bridge
