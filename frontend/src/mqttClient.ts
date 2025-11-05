@@ -1,4 +1,4 @@
-import { connect, MqttClient } from 'mqtt';
+import mqtt, { type MqttClient } from 'mqtt';
 import { useMetricsStore, type MetricPayload } from './stores/metrics';
 
 let client: MqttClient | null = null;
@@ -16,7 +16,7 @@ export function ensureMqttConnection(): MqttClient {
 
   const store = useMetricsStore();
 
-  client = connect(resolveBrokerUrl(), {
+  client = mqtt.connect(resolveBrokerUrl(), {
     clean: false,
     reconnectPeriod: 1000,
     clientId: `hmi-${Math.random().toString(16).slice(2, 10)}`,
