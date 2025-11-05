@@ -87,7 +87,7 @@ Each payload contains `metric`, `label`, `unit`, `value`, and `timestamp` (ms) a
 - **Nothing renders**: Ensure WebSocket port 8083 is reachable (`curl http://127.0.0.1:8083/mqtt` should respond) and that your browser allows insecure WebSocket if using HTTP.
 - **Different hostname**: Set `VITE_MQTT_HOST` and `VITE_MQTT_PORT` environment variables before building the `hmi` image if the broker is not on the same host.
 - **Podman Desktop**: Podman Desktop defaults to rootless networks; exposing 1883/8083 may require adding them to the rootless allowed ports.
-- **Image pull fails with short-name errors**: Podman requires fully qualified image names. The compose file references `docker.io/emqx/nanomq:0.21.4`, but if your registry policy differs update the `image` field accordingly or configure `/etc/containers/registries.conf`.
+- **Image pull fails with short-name errors**: Podman requires fully qualified image names. The compose file references `docker.io/emqx/nanomq:latest`, but if your registry policy differs update the `image` field accordingly or configure `/etc/containers/registries.conf`.
 
 ## License
 
