@@ -39,6 +39,13 @@ You should immediately see 20 animated metrics. Retained MQTT values are replaye
 ```bash
 podman compose down
 ```
+## Possible startup errors
+You might get an error like this:
+```bash
+  ERRO[0004] "rootlessport listen tcp 0.0.0.0:1883: bind: address already in use"
+```
+Solve it killing all the porocesses using that port:
+fist execute `podman compose down` then remove all containers `podman rm -fv $(podman ps -aq)` finally check which service is using the port `sudo lsof -i -P -n | grep <port number>` and kill it `sudo kill <process id>`
 
 ## Development workflow
 
